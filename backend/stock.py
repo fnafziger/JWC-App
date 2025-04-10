@@ -1,12 +1,12 @@
-from market import MarketSimulation
+import constants 
 import random
 
 class Stock:
     '''Class for a company's stock, not an individual stock.'''
 
-    def __init__(self, simulation: MarketSimulation, symbol: str, name: str, initalValue: float, amount: int, initalScore: float = 0.0):
+    def __init__(self, symbol: str, name: str, initalValue: float, amount: int, initalScore: float = 0.0):
         '''
-        simulation: MarketSimulation - The market that a stock is part of.
+        market: MarketSimulation - The market that a stock is part of.
 
         symbol: str - Three letter stock ticker symbols.
 
@@ -19,14 +19,11 @@ class Stock:
         initalScore: float - The initial score that a stock has. The stock score determines how a stock performs.
         '''
 
-        self._simulation = simulation
-        self._symbol = symbol
-        self._name = name
-        self._amount = amount
-        self._score = initalScore
-        self._value = initalValue
-
-        self._simulation.addStock(self)
+        self.symbol = symbol
+        self.name = name
+        self.amount = amount
+        self.score = initalScore
+        self.value = initalValue
 
     def updateValue(self, bias: float = 0.0) -> float: 
         '''
@@ -37,9 +34,9 @@ class Stock:
         Returns: New stock value.
         '''
 
-        change = self._value * max(-1, min(random.gauss(self._simulation.MEAN + (self._score / 10) + (bias / 10), self._simulation.STANDARD_DEVIATION), 1)) # Guass produces a bell curve (IE: drastic changes are less likely.)
-        self._value += change
-        return self._value
+        change = self.value * max(-1, min(random.gauss(constants.MEAN + (self.score / 10) + (bias / 10), constants.STANDARD_DEVIATION), 1)) # Guass produces a bell curve (IE: drastic changes are less likely.)
+        self.value += change
+        return self.value
 
     def split(self, splitAmount: int) -> None:
         '''
@@ -48,17 +45,36 @@ class Stock:
         splitAmount: int - The amount of stocks that each current stock will be split into.
         '''
 
-        self._value / splitAmount
-        self._amount * splitAmount
+        self.value / splitAmount
+        self.amount * splitAmount
 
-    @property
-    def symbol(self) -> str:
-        return self._symbol
-    
-    @property
-    def name(self) -> str:
-        return self._name
-    
-    @property
-    def value(self) -> float:
-        return self._value
+    def centerScore(self, amount: float, weight: float) -> float:
+        '''
+        Gradully recenters the stock score towards zero.
+
+        amount: float - The amount that the score changes by towards zero.
+
+        weight: float - Added weight towards positive or negative score. 
+        
+        Returns: The new score.
+        '''
+
+        if self.score < 0:
+            self.score = max(0, self.score + amount) + weight
+        else:
+            self.score = min(0, self.score - amount) + weight    
+
+        return self.score    
+
+    def updateScore(self, chance: float) -> float:
+        '''
+        Randomly updates the stock's score
+
+        chance: float - The chance that the stock gets updated.
+        
+        Returns: New stock score.
+        '''
+
+        if random.random() < chance:
+            self.score = max(-1, min(self.score + random.gauss(constants.MEAN + (self.score / 10), constants.STANDARD_DEVIATION), 1)) # Changes the score on a bell curve. The new score has a slight bias from the current score. 
+            return self.score

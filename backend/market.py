@@ -19,12 +19,12 @@ class MarketSimulation:
         initalMarketBias: float - The initial bias for the market. All stocks will be effected by this.
         '''
 
-        self._idCode = idCode
-        self._timeOpen = timeOpenUTC
-        self._timeClose = timeCloseUTC
-        self._marketBias = initalMarketBias
-        self._marketValue = 0.0
-        self._stocks = [] # type: list[Stock]
+        self.idCode = idCode
+        self.timeOpen = timeOpenUTC
+        self.timeClose = timeCloseUTC
+        self.marketBias = initalMarketBias
+        self.marketValue = 0.0
+        self.stocks = [] # type: list[Stock]
 
     def isOpen(self) -> bool:
         '''
@@ -34,7 +34,7 @@ class MarketSimulation:
         '''
 
         current = datetime.now(timezone.utc).time()
-        return self._timeOpen < current < self._timeClose
+        return self.timeOpen < current < self.timeClose
     
     def addStock(self, stock: Stock | list[Stock]) -> None:
         '''
@@ -44,11 +44,11 @@ class MarketSimulation:
         '''
 
         if type(stock) == list:
-            self._stocks.extend(stock)
+            self.stocks.extend(stock)
         else:
-            self._stocks.append(stock)
+            self.stocks.append(stock)
 
-    def updateAllStocks(self, excludedStocks: list[Stock] = None) -> float:
+    def updateAllStocks(self, excludedStocks: list[Stock] = []) -> float:
         '''
         Updates all stock values and updates market value.
         
@@ -58,40 +58,14 @@ class MarketSimulation:
         '''
 
         total = 0
-        for stock in self._stocks:
+        for stock in self.stocks:
             if stock in excludedStocks:
-                total += stock.value
+                total += stock.value * stock.amount
             else:
-                total += stock.updateValue(self._marketBias)
+                total += stock.updateValue(self.marketBias) * stock.amount
+                stock.centerScore(0.01, 0)
+                stock.updateScore(0.1)
 
-        self._marketValue = total
+        self.marketValue = total
 
-        return(self._marketValue)
-    
-    @property
-    def idCode(self) -> str:
-        return self._idCode
-    
-    @property
-    def timeOpen(self) -> datetime:
-        return self._timeOpen
-    
-    @property
-    def timeClose(self) -> datetime:
-        return self._timeClose
-    
-    @property
-    def timeClose(self) -> datetime:
-        return self._timeClose
-        
-    @property
-    def marketBias(self) -> float:
-        return self._marketBias
-    
-    @property
-    def marketValue(self) -> float:
-        return self._marketValue
-    
-    @property
-    def stocks(self) -> list[Stock]:
-        return self._stocks
+        return(self.marketValue)
