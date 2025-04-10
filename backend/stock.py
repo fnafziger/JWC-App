@@ -2,7 +2,7 @@ from market import MarketSimulation
 import random
 
 class Stock:
-    '''Class for a companies stock, not an individual stock.'''
+    '''Class for a company's stock, not an individual stock.'''
 
     def __init__(self, simulation: MarketSimulation, symbol: str, name: str, initalValue: float, amount: int, initalScore: float = 0.0):
         '''
