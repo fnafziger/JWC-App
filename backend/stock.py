@@ -34,7 +34,7 @@ class Stock:
         Returns: New stock value.
         '''
 
-        change = self.value * max(-1, min(random.gauss(constants.MEAN + (self.score / 10) + (bias / 10), constants.STANDARD_DEVIATION), 1)) # Guass produces a bell curve (IE: drastic changes are less likely.)
+        change = max(-1, min(random.gauss(constants.MEAN + (self.score / 100) + (bias / 100), constants.STANDARD_DEVIATION), 1)) # Gauss produces a bell curve (IE: drastic changes are less likely.)
         self.value += change
         return self.value
 
@@ -60,9 +60,9 @@ class Stock:
         '''
 
         if self.score < 0:
-            self.score = max(0, self.score + amount) + weight
+            self.score = min(0, self.score + amount) + weight
         else:
-            self.score = min(0, self.score - amount) + weight    
+            self.score = max(0, self.score - amount) + weight    
 
         return self.score    
 
@@ -76,5 +76,5 @@ class Stock:
         '''
 
         if random.random() < chance:
-            self.score = max(-1, min(self.score + random.gauss(constants.MEAN + (self.score / 10), constants.STANDARD_DEVIATION), 1)) # Changes the score on a bell curve. The new score has a slight bias from the current score. 
+            self.score = max(-1, min(self.score + random.gauss(constants.MEAN, constants.STANDARD_DEVIATION), 1)) # Changes the score on a bell curve. The new score has a slight bias from the current score. 
             return self.score

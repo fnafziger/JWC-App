@@ -4,10 +4,6 @@ from datetime import time, datetime, timezone
 class MarketSimulation:
     '''Class for simulated market that handles all the stocks delecated to it.'''
 
-    # Constants for stock updates.
-    MEAN = 0.00
-    STANDARD_DEVIATION = 0.03
-
     def __init__(self, idCode: str, timeOpenUTC: time, timeCloseUTC: time, initalMarketBias: float = 0.0):
         '''
         idCode: str - Four letter code to identify stock market.
@@ -60,9 +56,9 @@ class MarketSimulation:
         total = 0
         for stock in self.stocks:
             if stock in excludedStocks:
-                total += stock.value * stock.amount
+                total += stock.value
             else:
-                total += stock.updateValue(self.marketBias) * stock.amount
+                total += stock.updateValue(self.marketBias)
                 stock.centerScore(0.01, 0)
                 stock.updateScore(0.1)
 
