@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from backend.market import MarketSimulation
 from backend.stock import Stock
 import unittest
-from datetime import time, datetime, timezone, timedelta
+from datetime import datetime, timezone, timedelta
 
 class TestMarket(unittest.TestCase):
     def setUp(self):
@@ -40,3 +40,4 @@ class TestMarket(unittest.TestCase):
         self.assertEqual(len(self.market.stocks), 2)
         self.assertIs(self.market.stocks[0], stocks[0])
         self.assertIs(self.market.stocks[1], stocks[1])
+        

@@ -3,8 +3,8 @@ import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from backend.stock import Stock
 from backend.market import MarketSimulation
+from backend.stock import Stock
 import matplotlib.pyplot as plt
 import numpy as np
 from datetime import time
@@ -98,6 +98,6 @@ for t in range(5):
     plt.plot(xpoints, vpoints)
     plt.plot(xpoints, upoints)
 
-    print(str(t) + "/5")
+    print(str(t + 1) + "/5")
 
 plt.show()
