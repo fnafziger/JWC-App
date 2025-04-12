@@ -1,5 +1,10 @@
-from stock import Stock
-from market import MarketSimulation
+import sys
+import os
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from backend.stock import Stock
+from backend.market import MarketSimulation
 import matplotlib.pyplot as plt
 import numpy as np
 from datetime import time
