@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fake Stock Market</title>
+  <style>
+    #sellQuantity {
+      display: none;
+    }
+    #buyQuantity {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Check Stock Price</h1>
+
+  <input type="text" id="tickerInput" placeholder="Enter a ticker">
+  <button onclick="fetchPrice()">Get Price</button>
+
+  <p id="result"></p>
+
+  <script>
+    function fetchPrice() {
+      const ticker = document.getElementById("tickerInput").value;
+
+      fetch(`http://localhost:8000/${ticker}`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("result").innerText =
+            `Current price of ${ticker}: $${data.price}`;
+        })
+        .catch(err => {
+          console.error("Error fetching price:", err);
+          document.getElementById("result").innerText = "Error fetching price.";
+        });
+    }
+  </script>
+  
+  <select id="actionInput">
+    <option value="buy">Buy</option>
+    <option value="sell">Sell</option>
+  </select>
+  <input type="text" id="quantityInput" placeholder="Quantity">
+  <button onclick="sendInput()">Submit</button>
+
+  <script>
+    function sendInput() {
+      const ticker = document.getElementById("tickerInput").value
+      const action = document.getElementById("actionInput").value
+      const quantity = document.getElementById("quantityInput").value
+      fetch("http://localhost:8000/trade", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        ticker: ticker,
+        quantity: quantity,
+        action: action
+      })
+      })
+      .then(res => res.json())
+      .then(data => {
+      console.log("Response from server:", data);
+      })
+      .catch(err => console.error("Error:", err));
+    }
+  </script>
+</body>
+</html>

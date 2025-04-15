@@ -9,7 +9,7 @@ import random
 class Stock:
     '''Class for a company's stock, not an individual stock.'''
 
-    def __init__(self, symbol: str, name: str, initalValue: float, amount: int, initalScore: float = 0.0):
+    def __init__(self, symbol: str, name: str, initialValue: float, amount: int, initialScore: float = 0.0):
         '''
         market: MarketSimulation - The market that a stock is part of.
 
@@ -17,18 +17,18 @@ class Stock:
 
         name: str - Name of stock company.
 
-        initalValue: float - The initial value for a stock.
+        initialValue: float - The initial value for a stock.
 
         amount: int - The number of stocks in the company.
 
-        initalScore: float - The initial score that a stock has. The stock score determines how a stock performs.
+        initialScore: float - The initial score that a stock has. The stock score determines how a stock performs.
         '''
 
         self.symbol = symbol
         self.name = name
         self.amount = amount
-        self.score = initalScore
-        self.value = initalValue
+        self.score = initialScore
+        self.value = initialValue
 
     def updateValue(self, bias: float = 0.0) -> float: 
         '''
