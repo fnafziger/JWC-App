@@ -1,6 +1,8 @@
 import sys
 import os
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import matplotlib.pyplot as plt
 from datetime import datetime, timezone, timedelta
 from backend.market import MarketSimulation
@@ -45,7 +47,7 @@ for i, stock in enumerate(market.stocks):
 
 # Plot setup
 ax.set_xlim(0, NUM_FRAMES)
-ax.set_ylim(0, 50)  # Starting from 0–50, will rescale later
+ax.set_ylim(8, 12)  # Starting from 0–50, will rescale later
 ax.set_xlabel("Time (frames)")
 ax.set_ylabel("Stock Value ($)")
 ax.legend()

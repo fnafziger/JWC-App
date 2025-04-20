@@ -1,0 +1,23 @@
+{
+  "name": "jwc-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fnafziger/JWC-App.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fnafziger/JWC-App/issues"
+  },
+  "homepage": "https://github.com/fnafziger/JWC-App#readme"
+}
