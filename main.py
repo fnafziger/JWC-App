@@ -1,6 +1,6 @@
 from backend.stock import Stock
 from backend.market import MarketSimulation
-from fastapi import FastAPI, HTTPException # install with "pip install fastapi uvicorn" run with "uvicorn main:app --reload"
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from graphGenerators.stocksGraphGenerator import stocksGraphGenerator
