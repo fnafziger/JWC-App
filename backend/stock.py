@@ -42,6 +42,7 @@ class Stock:
 
         change = max(-1, min(random.gauss(constants.MEAN + (self.score / 100) + (bias / 100), constants.STANDARD_DEVIATION), 1)) # Gauss produces a bell curve (IE: drastic changes are less likely.)
         self.value += change
+
         self.value = round(self.value, 2)
         self.history.append(self.value)
 
